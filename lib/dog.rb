@@ -55,7 +55,7 @@ class Dog
     name = row.flatten[1]
     breed = row.flatten[2]
 
-    Dog.new(id:id, name:name, breed:breed)
+    Dog.new(id: id, name: name, breed: breed)
   end
 
   def update
