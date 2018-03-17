@@ -44,18 +44,18 @@ class Dog
     dog
   end
 
-  def self.find_by_id(id)
-    sql = "SELECT * FROM dogs WHERE id = ?"
-    row = DB[:conn].execute(sql, id)
-    self.new_from_db(row.flatten)
-  end
-
   def self.new_from_db(row)
     id = row.flatten[0]
     name = row.flatten[1]
     breed = row.flatten[2]
 
     Dog.new(id: id, name: name, breed: breed)
+  end
+
+  def self.find_by_id(id)
+    sql = "SELECT * FROM dogs WHERE id = ?"
+    row = DB[:conn].execute(sql, id)
+    self.new_from_db(row.flatten)
   end
 
   def update
