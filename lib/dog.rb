@@ -1,12 +1,12 @@
 class Dog
   attr_accessor :id, :name, :breed
-  
+
   def initialize(id:nil, name:, breed:)
     @id = id
     @name = name
     @breed = breed
   end
-  
+
   def self.create_table
     sql = <<-SQL
       CREATE TABLE IF NOT EXISTS dogs (
@@ -15,14 +15,14 @@ class Dog
       breed TEXT
       )
     SQL
-    
+
     DB[:conn].execute(sql)
   end
-  
+
   def self.drop_table
     DB[:conn].execute("DROP TABLE dogs")
   end
-  
+
   def save
     if self.id
       self.update
@@ -31,23 +31,24 @@ class Dog
         INSERT INTO dogs (name, breed) VALUES (?,?)
       SQL
       DB[:conn].execute(sql, self.name, self.breed)
-      
+
       @id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
     end
     self
   end
-  
+
   def self.create(name:, breed:)
     dog = Dog.new(name: name, breed: breed)
     dog.save
     dog
   end
-  
+
   def self.find_by_id(id)
     sql = "SELECT * FROM dogs WHERE id = ?"
     dog = DB[:conn].execute(sql, id)
+    Dog.new(dog[0], dog[1], dog[2])
   end
-  
+
   def update
     sql = "UPDATE dogs SET name = ?, breed = ? WHERE id = ?"
     DB[:conn].execute(sql, self.name, self.breed, self.id)
