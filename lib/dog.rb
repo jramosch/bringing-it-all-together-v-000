@@ -58,7 +58,7 @@ class Dog
     self.new_from_db(row.flatten)
   end
 
-  def self.find_or_create_by
+  def self.find_or_create_by(name:, breed:)
     
   end
 
