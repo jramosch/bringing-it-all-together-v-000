@@ -66,7 +66,7 @@ class Dog
     SQL
     result = DB[:conn].execute(sql, name, breed)
     if !result.empty?
-      data = result[0]
+      data = result.flatten
       dog = Dog.new(result[0], result[1], result[2])
     else
       dog = self.create(name: name, breed: breed)
