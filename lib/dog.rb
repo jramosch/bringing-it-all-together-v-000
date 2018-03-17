@@ -63,9 +63,9 @@ class Dog
     result = DB[:conn].execute(sql, name, breed)
     if !result.empty?
       data = dog.flatten
-      
+
     else
-      
+
     end
   end
 
